@@ -87,7 +87,7 @@ const AdminTontines = () => {
           </thead>
           <tbody>
             {tontines.map(t => (
-              <tr key={t.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <tr key={t.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
                 <td style={{ padding: '12px', fontSize: '12px', color: 'var(--text-muted)' }}>{t.id.substring(0,8)}...</td>
                 <td style={{ padding: '12px' }}>{t.nom}</td>
                 <td style={{ padding: '12px' }}>{t.montant} FCFA</td>

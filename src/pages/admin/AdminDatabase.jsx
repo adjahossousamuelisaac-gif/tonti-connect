@@ -158,9 +158,9 @@ const AdminDatabase = () => {
                   <h3 style={{ textTransform: 'uppercase', fontSize: '14px', letterSpacing: '1px', marginBottom: '16px', color: 'var(--primary)' }}>
                     Table: {tableName}
                   </h3>
-                  <div style={{ overflowX: 'auto', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px' }}>
+                  <div style={{ overflowX: 'auto', border: '1px solid var(--border-color)', borderRadius: '8px' }}>
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
-                      <thead style={{ background: 'rgba(255,255,255,0.05)' }}>
+                      <thead style={{ background: 'var(--glass-bg)' }}>
                         <tr>
                           {columns.map(col => <th key={col} style={{ padding: '12px', textAlign: 'left', color: 'var(--text-muted)' }}>{col}</th>)}
                           <th style={{ padding: '12px' }}></th>
@@ -168,7 +168,7 @@ const AdminDatabase = () => {
                       </thead>
                       <tbody>
                         {items.map(item => (
-                          <tr key={item.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                          <tr key={item.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
                             {columns.map(col => {
                               const isEditing = editingCell?.table === tableName && editingCell?.id === item.id && editingCell?.field === col;
                               const value = item[col];

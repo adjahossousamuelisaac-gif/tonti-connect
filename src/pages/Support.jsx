@@ -6,7 +6,7 @@ import { Send, CheckCircle2, ChevronDown, ChevronUp, HelpCircle, MessageSquare }
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="glass-panel" style={{ marginBottom: '12px', padding: '0', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)' }}>
+    <div className="glass-panel" style={{ marginBottom: '12px', padding: '0', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
       <button 
         onClick={() => setIsOpen(!isOpen)}
         style={{ 
@@ -20,7 +20,7 @@ const FAQItem = ({ question, answer }) => {
       </button>
       <div style={{ 
         maxHeight: isOpen ? '200px' : '0', overflow: 'hidden', transition: 'all 0.3s ease-in-out',
-        background: 'rgba(255,255,255,0.02)'
+        background: 'var(--glass-bg)'
       }}>
         <p style={{ padding: '20px', margin: 0, color: 'var(--text-main)', fontSize: '14px', lineHeight: '1.6' }}>
           {answer}
@@ -91,31 +91,33 @@ const Support = () => {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '32px', alignItems: 'start', marginTop: '32px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', alignItems: 'start', marginTop: '32px' }}>
         
         {/* FAQ SECTION */}
         <div>
-          <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px', fontSize: '20px' }}>
             <HelpCircle size={24} color="var(--primary)" /> Questions Fréquentes
           </h3>
-          {faqs.map((faq, index) => (
-            <FAQItem key={index} {...faq} />
-          ))}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {faqs.map((faq, index) => (
+              <FAQItem key={index} {...faq} />
+            ))}
+          </div>
         </div>
 
         {/* CONTACT FORM */}
         <div>
-          <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px', fontSize: '20px' }}>
             <MessageSquare size={24} color="var(--primary)" /> Nous écrire
           </h3>
           <div className="glass-panel" style={{ padding: '32px' }}>
             {sent ? (
-              <div style={{ textAlign: 'center', padding: '20px' }}>
+              <div style={{ textAlign: 'center', padding: '12px' }}>
                 <div style={{ display: 'inline-flex', background: 'rgba(46, 204, 113, 0.1)', padding: '20px', borderRadius: '50%', marginBottom: '20px' }}>
                    <CheckCircle2 size={40} color="#2ecc71" />
                 </div>
-                <h4>Message envoyé !</h4>
-                <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '12px' }}>L'administration vous répondra dès que possible.</p>
+                <h4 style={{ fontSize: '20px', margin: 0 }}>Message envoyé !</h4>
+                <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '12px', lineHeight: '1.5' }}>L'administration vous répondra dès que possible.</p>
                 <button className="btn btn-outline" style={{ marginTop: '24px', width: '100%' }} onClick={() => setSent(false)}>Nouveau message</button>
               </div>
             ) : (
@@ -129,7 +131,7 @@ const Support = () => {
                     value={message}
                     onChange={e => setMessage(e.target.value)}
                     required
-                    style={{ width: '100%', resize: 'none', lineHeight: '1.6' }}
+                    style={{ width: '100%', resize: 'none', lineHeight: '1.6', fontSize: '15px' }}
                   ></textarea>
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={loading} style={{ marginTop: '24px', width: '100%', display: 'flex', justifyContent: 'center', gap: '10px', padding: '14px' }}>

@@ -1,55 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { ThemeProvider } from './contexts/ThemeContext';
 import Layout from './components/Layout';
-import Dashboard from './pages/Dashboard';
-import Tontines from './pages/Tontines';
-import TontineDetails from './pages/TontineDetails';
-import JoinGroup from './pages/JoinGroup';
-import Paiements from './pages/Paiements';
-import Auth from './pages/Auth';
-import Profil from './pages/Profil';
-import Support from './pages/Support';
+
+// Lazy load pages
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Tontines = lazy(() => import('./pages/Tontines'));
+const TontineDetails = lazy(() => import('./pages/TontineDetails'));
+const JoinGroup = lazy(() => import('./pages/JoinGroup'));
+const Paiements = lazy(() => import('./pages/Paiements'));
+const Auth = lazy(() => import('./pages/Auth'));
+const Profil = lazy(() => import('./pages/Profil'));
+const Support = lazy(() => import('./pages/Support'));
 
 // Admin imports
 import AdminRoute from './components/AdminRoute';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminUsers from './pages/admin/AdminUsers';
-import AdminTontines from './pages/admin/AdminTontines';
-import AdminSupport from './pages/admin/AdminSupport';
-import AdminDatabase from './pages/admin/AdminDatabase';
-import AdminStats from './pages/admin/AdminStats';
-
-import { useLocation, useNavigate } from 'react-router-dom';
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
+const AdminTontines = lazy(() => import('./pages/admin/AdminTontines'));
+const AdminSupport = lazy(() => import('./pages/admin/AdminSupport'));
+const AdminDatabase = lazy(() => import('./pages/admin/AdminDatabase'));
+const AdminStats = lazy(() => import('./pages/admin/AdminStats'));
 
 function PrivateRoute({ children }) {
   const { currentUser } = useAuth();
   return currentUser ? children : <Navigate to="/auth" />;
 }
 
-function InitialRedirect() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    // Si on arrive sur l'app et qu'on n'est pas sur la racine ni sur l'auth, on redirige vers /
-    // On exclut aussi les routes spéciales comme les invitations si nécessaire
-    const path = location.pathname;
-    if (path !== '/' && path !== '/auth' && !path.startsWith('/join/')) {
-      navigate('/', { replace: true });
-    }
-  }, []); // Exécuté une seule fois au montage initial
-
-  return null;
-}
-
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <BrowserRouter>
-          <InitialRedirect />
+    <AuthProvider>
+      <BrowserRouter>
+        <Suspense fallback={<div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0f1115' }}><div className="loader"></div></div>}>
           <Routes>
             <Route path="/auth" element={<Auth />} />
             <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
@@ -69,10 +51,11 @@ function App() {
               <Route path="admin/database" element={<AdminRoute><AdminDatabase /></AdminRoute>} />
               <Route path="admin/stats" element={<AdminRoute><AdminStats /></AdminRoute>} />
             </Route>
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </BrowserRouter>
-      </AuthProvider>
-    </ThemeProvider>
+        </Suspense>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

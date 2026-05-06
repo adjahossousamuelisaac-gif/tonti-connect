@@ -71,9 +71,9 @@ const AdminSupport = () => {
           {recommendations.length === 0 ? <p style={{ color: 'var(--text-muted)' }}>Aucune recommandation en attente.</p> : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {recommendations.map(r => (
-                <div key={r.id} style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div key={r.id} style={{ padding: '16px', background: 'var(--glass-bg)', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
                   <p style={{ margin: '0 0 8px 0', fontSize: '14px', lineHeight: '1.5' }}>{r.message}</p>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
                     <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{r.userEmail}</span>
                     <button className="btn btn-icon" onClick={() => handleDelete(r.id)}><Trash2 size={16} color="var(--danger)" /></button>
                   </div>
@@ -91,7 +91,7 @@ const AdminSupport = () => {
           {passwordResets.length === 0 ? <p style={{ color: 'var(--text-muted)' }}>Aucune demande en attente.</p> : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {passwordResets.map(r => (
-                <div key={r.id} style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div key={r.id} style={{ padding: '16px', background: 'var(--glass-bg)', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
                     <Mail size={16} color="var(--text-muted)" />
                     <span style={{ fontWeight: '500' }}>{r.email}</span>

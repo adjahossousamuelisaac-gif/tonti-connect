@@ -4,13 +4,14 @@ import { LayoutDashboard, Users, CreditCard, LogOut, Package, Sun, Moon, User, S
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   const { logout, currentUser, userData } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   async function handleLogout() {
     try {
+      onClose(); // Fermer le menu sur mobile
       await logout();
       navigate('/auth');
     } catch (error) {
@@ -19,8 +20,8 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="sidebar">
-      <Link to="/" className="sidebar-logo">
+    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+      <Link to="/" className="sidebar-logo" onClick={onClose}>
         <Package className="icon" size={28} />
         Tontine Connect
       </Link>
@@ -31,22 +32,22 @@ const Sidebar = () => {
             <div style={{ marginBottom: '8px', fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-muted)', paddingLeft: '16px' }}>
               Administration
             </div>
-            <NavLink to="/admin" end className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+            <NavLink to="/admin" end className={({ isActive }) => isActive ? "nav-item active" : "nav-item"} onClick={onClose}>
               <ShieldAlert size={20} /> Admin Dashboard
             </NavLink>
-            <NavLink to="/admin/users" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+            <NavLink to="/admin/users" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"} onClick={onClose}>
               <Users size={20} /> Utilisateurs
             </NavLink>
-            <NavLink to="/admin/tontines" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+            <NavLink to="/admin/tontines" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"} onClick={onClose}>
               <Package size={20} /> Tontines
             </NavLink>
-            <NavLink to="/admin/support" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+            <NavLink to="/admin/support" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"} onClick={onClose}>
               <LifeBuoy size={20} /> Requêtes Support
             </NavLink>
-            <NavLink to="/admin/database" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+            <NavLink to="/admin/database" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"} onClick={onClose}>
               <Database size={20} /> Base de données
             </NavLink>
-            <NavLink to="/admin/stats" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+            <NavLink to="/admin/stats" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"} onClick={onClose}>
               <BarChart3 size={20} /> Analyses Stats
             </NavLink>
           </>
@@ -56,6 +57,7 @@ const Sidebar = () => {
               to="/" 
               end
               className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+              onClick={onClose}
             >
               <LayoutDashboard size={20} />
               Tableau de bord
@@ -64,6 +66,7 @@ const Sidebar = () => {
             <NavLink 
               to="/tontines" 
               className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+              onClick={onClose}
             >
               <Users size={20} />
               Tontines
@@ -72,6 +75,7 @@ const Sidebar = () => {
             <NavLink 
               to="/paiements" 
               className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+              onClick={onClose}
             >
               <CreditCard size={20} />
               Paiements
@@ -80,14 +84,16 @@ const Sidebar = () => {
             <NavLink 
               to="/profil" 
               className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+              onClick={onClose}
             >
               <User size={20} />
               Profil
             </NavLink>
-
+ 
             <NavLink 
               to="/support" 
               className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+              onClick={onClose}
             >
               <LifeBuoy size={20} />
               Support
@@ -100,10 +106,15 @@ const Sidebar = () => {
         <button 
           className="nav-item" 
           style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }} 
-          onClick={toggleTheme}
+          onClick={() => { 
+            toggleTheme(); 
+            setTimeout(onClose, 50); 
+          }}
         >
-          {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-          {theme === 'dark' ? 'Mode Clair' : 'Mode Sombre'}
+          <span style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            {theme === 'dark' ? <Sun size={20} key="sun" /> : <Moon size={20} key="moon" />}
+            {theme === 'dark' ? 'Mode Clair' : 'Mode Sombre'}
+          </span>
         </button>
 
         <button className="btn btn-outline" style={{ width: '100%', justifyContent: 'flex-start' }} onClick={handleLogout}>

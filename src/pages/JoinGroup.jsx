@@ -75,7 +75,7 @@ const JoinGroup = () => {
             <h1 style={{ fontSize: '28px', marginBottom: '8px' }}>Rejoindre une Tontine</h1>
             <p style={{ color: 'var(--text-muted)', marginBottom: '32px' }}>Vous avez été invité à rejoindre le groupe d'épargne suivant :</p>
             
-            <div style={{ background: 'rgba(255,255,255,0.03)', padding: '24px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)', marginBottom: '32px', textAlign: 'left' }}>
+            <div style={{ background: 'var(--glass-bg)', padding: '24px', borderRadius: '20px', border: '1px solid var(--border-color)', marginBottom: '32px', textAlign: 'left' }}>
               <h3 style={{ margin: '0 0 12px 0', fontSize: '20px' }}>{tontine?.nom}</h3>
               <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '15px' }}>
                 <span>Cotisation :</span>

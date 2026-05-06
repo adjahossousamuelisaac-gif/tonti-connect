@@ -101,7 +101,7 @@ const Profil = () => {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '32px', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px', alignItems: 'start' }}>
         
         {/* LEFT COLUMN: AVATAR & STATS */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -109,7 +109,7 @@ const Profil = () => {
             <div style={{ position: 'relative' }}>
               <div style={{ 
                 width: '120px', height: '120px', borderRadius: '60px', 
-                background: 'linear-gradient(135deg, var(--primary), var(--primary-dark))',
+                background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '40px', fontWeight: 'bold', color: 'white',
                 boxShadow: '0 8px 32px rgba(155, 81, 224, 0.3)',
@@ -142,7 +142,7 @@ const Profil = () => {
         </div>
 
         {/* RIGHT COLUMN: FORMS */}
-        <div className="glass-panel" style={{ padding: '40px' }}>
+        <div className="glass-panel" style={{ padding: '32px' }}>
           {message.text && (
             <div className={`badge ${message.type === 'success' ? 'success' : 'danger'}`} style={{ width: '100%', padding: '16px', marginBottom: '32px', display: 'flex', alignItems: 'center', gap: '12px' }}>
               {message.type === 'success' ? <CheckCircle2 size={20} /> : <AlertCircle size={20} />}
@@ -151,9 +151,9 @@ const Profil = () => {
           )}
 
           <form onSubmit={handleSubmit}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '40px' }}>
-              <div style={{ gridColumn: 'span 2' }}>
-                <h3 style={{ fontSize: '18px', marginBottom: '24px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '12px' }}>Informations Personnelles</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '40px' }}>
+              <div style={{ gridColumn: '1 / -1' }}>
+                <h3 style={{ fontSize: '18px', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>Informations Personnelles</h3>
               </div>
               
               <div className="form-group">
@@ -177,43 +177,43 @@ const Profil = () => {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '40px' }}>
-              <div style={{ gridColumn: 'span 2' }}>
-                <h3 style={{ fontSize: '18px', marginBottom: '24px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '12px' }}>Accès & Sécurité</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px', marginBottom: '40px' }}>
+              <div>
+                <h3 style={{ fontSize: '18px', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>Accès & Sécurité</h3>
               </div>
 
-              <div className="form-group" style={{ gridColumn: 'span 2' }}>
+              <div className="form-group">
                 <label className="form-label"><Mail size={14} /> Adresse Email</label>
                 <input type="email" className="form-input" value={newEmail} onChange={e => setNewEmail(e.target.value)} required />
               </div>
 
-              <div className="form-group" style={{ gridColumn: 'span 2' }}>
+              <div className="form-group">
                 <label className="form-label"><Lock size={14} /> Nouveau mot de passe</label>
                 <input type="password" className="form-input" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="Laisser vide pour ne pas changer" />
               </div>
 
               {showReauth && (
-                <div style={{ gridColumn: 'span 2', padding: '24px', background: 'rgba(155, 81, 224, 0.05)', borderRadius: '12px', border: '1px solid var(--primary)' }}>
+                <div style={{ padding: '20px', background: 'rgba(155, 81, 224, 0.05)', borderRadius: '12px', border: '1px solid var(--primary)' }}>
                   <p style={{ fontSize: '13px', marginBottom: '16px' }}>Veuillez confirmer votre mot de passe actuel :</p>
                   <input type="password" className="form-input" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} placeholder="Mot de passe actuel" required />
                 </div>
               )}
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px', alignItems: 'center' }}>
-              <button type="submit" className="btn btn-primary" disabled={saving} style={{ padding: '12px 32px' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+              <button type="submit" className="btn btn-primary" disabled={saving} style={{ padding: '12px 32px', width: '100%' }}>
                 <Save size={18} /> {saving ? 'Enregistrement...' : 'Sauvegarder le profil'}
               </button>
             </div>
           </form>
 
-          <div style={{ marginTop: '64px', paddingTop: '32px', borderTop: '1px solid rgba(231, 76, 60, 0.2)' }}>
-            <h4 style={{ color: '#e74c3c', fontSize: '14px', textTransform: 'uppercase', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ marginTop: '48px', paddingTop: '32px', borderTop: '1px solid rgba(235, 87, 87, 0.2)' }}>
+            <h4 style={{ color: 'var(--danger)', fontSize: '14px', textTransform: 'uppercase', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Trash2 size={16} /> Zone de danger
             </h4>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
               <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>Toutes vos données seront supprimées définitivement.</p>
-              <button className="btn btn-outline" style={{ color: '#e74c3c', borderColor: '#e74c3c', padding: '8px 16px' }} onClick={handleDeleteAccount}>
+              <button className="btn btn-outline" style={{ color: 'var(--danger)', borderColor: 'var(--danger)', padding: '8px 16px' }} onClick={handleDeleteAccount}>
                 Supprimer mon compte
               </button>
             </div>

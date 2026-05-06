@@ -89,7 +89,7 @@ const AdminUsers = () => {
           </thead>
           <tbody>
             {users.map(u => (
-              <tr key={u.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <tr key={u.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
                 <td style={{ padding: '12px' }}>{u.prenom} {u.nom}</td>
                 <td style={{ padding: '12px' }}>@{u.username}</td>
                 <td style={{ padding: '12px' }}>{u.email}</td>

@@ -1,8 +1,9 @@
 // src/hooks/usePaiements.js
 import { useState, useEffect } from 'react'
-import { database, ref, set, push, onValue, update, remove } from '../config/firebase'
+import { database, ref, set, get, push, onValue, update, remove } from '../config/firebase'
 import { genererId } from '../utils/formatters'
 import { determinerBeneficiaire, verifierCycleComplet } from '../utils/calculsTontine'
+import { useCallback } from 'react'
 
 export function usePaiements(tontineId, cycleActuel, ordreTour, montant, nombreMembres, onCycleComplet) {
     const [paiements, setPaiements] = useState([])
@@ -139,22 +140,22 @@ export function usePaiements(tontineId, cycleActuel, ordreTour, montant, nombreM
   }
 
   // Vérifier si un membre a payé pour un cycle (confirmé uniquement)
-  function aPaye(membreId, cycle) {
+  const aPaye = useCallback((membreId, cycle) => {
     return paiements.some(p => 
       p.membreId === membreId && 
       p.cycle === cycle && 
       p.statut === 'paye'
     )
-  }
+  }, [paiements])
 
   // Vérifier si un paiement est en attente
-  function estEnAttente(membreId, cycle) {
+  const estEnAttente = useCallback((membreId, cycle) => {
     return paiements.some(p => 
       p.membreId === membreId && 
       p.cycle === cycle && 
       p.statut === 'en_attente'
     )
-  }
+  }, [paiements])
 
   // Calculer le montant collecté pour un cycle (confirmé uniquement)
   function montantCollecte(cycle) {
